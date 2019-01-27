@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatSelectModule, MatOptionModule, MatGridListModule, MatToolbarModule, MatButtonToggleModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AboutComponent } from './about/about.component';
 import { ControlComponent } from './control/control.component';
+import {FormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,14 @@ import { ControlComponent } from './control/control.component';
     MatIconModule,
     MatListModule,
     MatCardModule,
+    MatButtonToggleModule,
+    MatFormFieldModule,
     BrowserAnimationsModule,
+    MatInputModule,
+    FormsModule,
+    MatOptionModule,
+    MatGridListModule,
+    MatSelectModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

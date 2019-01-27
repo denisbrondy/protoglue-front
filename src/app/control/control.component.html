@@ -1,11 +1,40 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Control</mat-card-title>
+    <mat-card-title>Device connection</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <button mat-flat-button (click)="scan()" [disabled]="connected" color="primary">Scan</button>
+    <button mat-flat-button (click)="disconnect()" [disabled]="!connected" color="primary">Disconnect</button>
+    <mat-form-field>
+      <mat-label>Device name</mat-label>
+      <input matInput [readonly]="true" [(ngModel)]="deviceName">
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Motor control</mat-card-title>
     <mat-card-subtitle></mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <p>
-      
+      <button mat-flat-button (click)="forward()" [disabled]="!connected" color="primary">Forward</button>
+      <button mat-flat-button (click)="backward()" [disabled]="!connected" color="primary">Backward</button>
+      <button mat-flat-button (click)="stop()" [disabled]="!connected" color="warn">Stop</button>
+      <mat-form-field>
+        <mat-select placeholder="Step mode" [(ngModel)]="stepFactor">
+          <mat-option *ngFor="let factor of factors" [value]="factor.value">
+            {{factor.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Position</mat-label>
+        <input matInput [readonly]="true" [(ngModel)]="motorPosition">
+      </mat-form-field>
     </p>
   </mat-card-content>
 </mat-card>
