@@ -12,8 +12,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AboutComponent } from './about/about.component';
 import { ControlComponent } from './control/control.component';
-import {FormsModule} from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule }  from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import {FormsModule} from '@angular/forms';
     MatOptionModule,
     MatGridListModule,
     MatSelectModule,
+    FlexLayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

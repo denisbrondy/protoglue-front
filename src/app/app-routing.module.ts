@@ -7,6 +7,8 @@ const routes: Routes = [{
   path: 'about', component: AboutComponent
 }, {
   path: 'control', component: ControlComponent
+}, {
+  path: '**', pathMatch : 'full', redirectTo : '/control'
 }];
 
 @NgModule({
