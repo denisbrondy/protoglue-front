@@ -21,9 +21,14 @@
   </mat-card-header>
   <mat-card-content>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-      <button mat-flat-button (click)="forward()" [disabled]="!connected" color="primary">Forward</button>
-      <button mat-flat-button (click)="backward()" [disabled]="!connected" color="primary">Backward</button>
+      <button mat-flat-button (click)="forward()" [disabled]="!connected || moving" color="primary">Forward</button>
       <button mat-flat-button (click)="stop()" [disabled]="!connected" color="warn">Stop</button>
+      <button mat-flat-button (click)="backward()" [disabled]="!connected || moving" color="primary">Backward</button>
+      <button mat-flat-button (click)="goToZero()" [disabled]="!connected || moving" color="accent">Go to zero</button>
+      <mat-form-field>
+        <mat-label>Current position</mat-label>
+        <input matInput [readonly]="true" [(ngModel)]="motorPosition">
+      </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Step mode" [(ngModel)]="stepFactor">
           <mat-option *ngFor="let factor of factors" [value]="factor.value">
@@ -32,8 +37,8 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Current position</mat-label>
-        <input matInput [readonly]="true" [(ngModel)]="motorPosition">
+        <mat-label>Move with following step number</mat-label>
+        <input matInput [disabled]="!(stepFactor==-1)" [(ngModel)]="userDefinedStepValue">
       </mat-form-field>
     </div>
   </mat-card-content>

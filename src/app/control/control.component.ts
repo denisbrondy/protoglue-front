@@ -26,11 +26,16 @@ export class ControlComponent implements OnInit {
 
   public stepFactor: number = 1;
 
+  public userDefinedStepValue: number = 0;
+
+  public moving: boolean = false;
+
   public factors: Factor[] = [
-    {value: 1, viewValue: 'Step by step'},
-    {value: 10, viewValue: '10 steps'},
-    {value: 360, viewValue: '1 revolution'},
-    {value: 3600, viewValue: '10 revolutions'}
+    { value: 1, viewValue: 'Step by step' },
+    { value: 10, viewValue: '10 steps' },
+    { value: 360, viewValue: '1 revolution' },
+    { value: 3600, viewValue: '10 revolutions' },
+    { value: -1, viewValue: 'User defined' },
   ];
 
   constructor() { }
@@ -57,8 +62,7 @@ export class ControlComponent implements OnInit {
                 function (event) {
                   let charac: BluetoothRemoteGATTCharacteristic = <BluetoothRemoteGATTCharacteristic>event.target;
                   that.motorPosition = charac.value.getInt32(0, true);
-                  // that.motorCourseStepPosition = charac.value.getInt32(4, true);
-                  //console.log(charac);
+                  that.moving = Boolean(charac.value.getInt8(4));
                 });
             }).catch(function (error) {
               console.log(error);
@@ -83,7 +87,11 @@ export class ControlComponent implements OnInit {
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 1);
-    dataView.setInt16(1, this.stepFactor);
+    if (this.stepFactor == -1) {
+      dataView.setInt16(1, this.userDefinedStepValue);
+    } else {
+      dataView.setInt16(1, this.stepFactor);
+    }
     this.commandCharacteristic.writeValue(dataView);
   }
 
@@ -91,7 +99,26 @@ export class ControlComponent implements OnInit {
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 2);
-    dataView.setInt16(1, this.stepFactor);
+    if (this.stepFactor == -1) {
+      dataView.setInt16(1, this.userDefinedStepValue);
+    } else {
+      dataView.setInt16(1, this.stepFactor);
+    }
+    this.commandCharacteristic.writeValue(dataView);
+  }
+
+  public stop() {
+    var buffer = new ArrayBuffer(1);
+    var dataView = new DataView(buffer);
+    dataView.setInt8(0, 3);
+    this.commandCharacteristic.writeValue(dataView);
+  }
+
+
+  public goToZero() {
+    var buffer = new ArrayBuffer(1);
+    var dataView = new DataView(buffer);
+    dataView.setInt8(0, 4);
     this.commandCharacteristic.writeValue(dataView);
   }
 
@@ -102,13 +129,6 @@ export class ControlComponent implements OnInit {
     this.connected = false;
     this.deviceName = '';
     this.motorPosition = 0;
-  }
-
-  public stop() {
-    var buffer = new ArrayBuffer(1);
-    var dataView = new DataView(buffer);
-    dataView.setInt8(0, 5);
-    this.commandCharacteristic.writeValue(dataView);
   }
 
   ngOnInit() {
