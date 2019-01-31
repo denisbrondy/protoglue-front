@@ -1,11 +1,4 @@
-mat-card {
-    margin: 10px;
-}
 
-mat-form-field {
-    margin-left: 10px;
-}
-
-button {
-    margin-left: 10px;
+.spacer {
+    margin-top: 10px;
 }

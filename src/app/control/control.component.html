@@ -1,9 +1,13 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Device connection</mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Device connection
+      </mat-panel-title>
+      <mat-panel-description>
+        <b>{{deviceName}}</b>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
       <button mat-flat-button (click)="scan()" [disabled]="connected" color="primary">Scan</button>
       <button mat-flat-button (click)="disconnect()" [disabled]="!connected" color="primary">Disconnect</button>
@@ -12,19 +16,24 @@
         <input matInput [readonly]="true" [(ngModel)]="deviceName">
       </mat-form-field>
     </div>
-  </mat-card-content>
-</mat-card>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Motor control</mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="connected">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Motor control
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
       <button mat-flat-button (click)="forward()" [disabled]="!connected || moving" color="primary">Forward</button>
       <button mat-flat-button (click)="stop()" [disabled]="!connected" color="warn">Stop</button>
       <button mat-flat-button (click)="backward()" [disabled]="!connected || moving" color="primary">Backward</button>
       <button mat-flat-button (click)="goToZero()" [disabled]="!connected || moving" color="accent">Go to zero</button>
+      <button mat-flat-button (click)="resetZeroPosition()" [disabled]="!connected || moving" color="accent">Reset zero
+        position</button>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" class="spacer">
       <mat-form-field>
         <mat-label>Current position</mat-label>
         <input matInput [readonly]="true" [(ngModel)]="motorPosition">
@@ -38,8 +47,8 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Move with following step number</mat-label>
-        <input matInput [disabled]="!(stepFactor==-1)" [(ngModel)]="userDefinedStepValue">
+        <input matInput type="number" min=0 max=9999999999 [disabled]="!(stepFactor==-1)" [(ngModel)]="userDefinedStepValue">
       </mat-form-field>
     </div>
-  </mat-card-content>
-</mat-card>
+  </mat-expansion-panel>
+</mat-accordion>

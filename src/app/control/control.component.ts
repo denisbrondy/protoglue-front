@@ -87,7 +87,7 @@ export class ControlComponent implements OnInit {
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 1);
-    if (this.stepFactor == -1) {
+    if (this.stepFactor == -1 && this.userDefinedStepValue !== undefined) {
       dataView.setInt16(1, this.userDefinedStepValue);
     } else {
       dataView.setInt16(1, this.stepFactor);
@@ -99,7 +99,7 @@ export class ControlComponent implements OnInit {
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 2);
-    if (this.stepFactor == -1) {
+    if (this.stepFactor == -1 && this.userDefinedStepValue !== undefined) {
       dataView.setInt16(1, this.userDefinedStepValue);
     } else {
       dataView.setInt16(1, this.stepFactor);
@@ -114,11 +114,17 @@ export class ControlComponent implements OnInit {
     this.commandCharacteristic.writeValue(dataView);
   }
 
-
   public goToZero() {
     var buffer = new ArrayBuffer(1);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 4);
+    this.commandCharacteristic.writeValue(dataView);
+  }
+
+  public resetZeroPosition() {
+    var buffer = new ArrayBuffer(1);
+    var dataView = new DataView(buffer);
+    dataView.setInt8(0, 5);
     this.commandCharacteristic.writeValue(dataView);
   }
 
