@@ -74,7 +74,7 @@ export class ControlComponent implements OnInit {
 
   public scan() {
     var that = this;
-    (window.navigator as any).bluetooth.requestDevice({
+    navigator.bluetooth.requestDevice({
       acceptAllDevices: true,
       optionalServices: ['39ead0db-0bbf-449a-9af9-24001ea09aa3']
     }).then(function (device: BluetoothDevice) {
