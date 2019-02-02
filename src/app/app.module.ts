@@ -6,12 +6,12 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatExpansionModule, MatSelectModule, MatOptionModule, MatGridListModule, MatToolbarModule, MatButtonToggleModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatDialogModule, MatExpansionModule, MatSelectModule, MatOptionModule, MatGridListModule, MatToolbarModule, MatButtonToggleModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { LayoutModule } from '@angular/cdk/layout';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AboutComponent } from './about/about.component';
-import { ControlComponent } from './control/control.component';
+import { ControlComponent, DialogConfirm } from './control/control.component';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule }  from '@angular/flex-layout';
 
@@ -20,8 +20,10 @@ import { FlexLayoutModule }  from '@angular/flex-layout';
     AppComponent,
     NavigationComponent,
     AboutComponent,
-    ControlComponent
+    ControlComponent,
+    DialogConfirm
   ],
+  entryComponents: [ DialogConfirm ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,6 +44,7 @@ import { FlexLayoutModule }  from '@angular/flex-layout';
     MatSelectModule,
     FlexLayoutModule,
     MatExpansionModule,
+    MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

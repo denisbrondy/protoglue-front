@@ -30,7 +30,8 @@
       <button mat-flat-button (click)="stop()" [disabled]="!connected" color="warn">Stop</button>
       <button mat-flat-button (click)="backward()" [disabled]="!connected || moving" color="primary">Backward</button>
       <button mat-flat-button (click)="goToZero()" [disabled]="!connected || moving" color="accent">Go to zero</button>
-      <button mat-flat-button (click)="resetZeroPosition()" [disabled]="!connected || moving" color="accent">Reset zero
+      <button mat-flat-button (click)="resetZeroPosition()" [disabled]="!connected || moving || motorPosition == 0"
+        color="accent">Reset zero
         position</button>
     </div>
     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" class="spacer">
@@ -48,6 +49,24 @@
       <mat-form-field>
         <mat-label>Move with following step number</mat-label>
         <input matInput type="number" min=0 max=9999999999 [disabled]="!(stepFactor==-1)" [(ngModel)]="userDefinedStepValue">
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Motor speed
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <mat-form-field>
+        <mat-select placeholder="Speed" [(ngModel)]="speed">
+          <mat-option *ngFor="let speed of speeds" [value]="speed.value">
+            {{speed.viewValue}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </mat-expansion-panel>

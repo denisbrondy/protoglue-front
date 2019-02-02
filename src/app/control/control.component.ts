@@ -1,8 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogConfig, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface Factor {
   value: number;
   viewValue: string;
+}
+
+export interface Speed {
+  value: number;
+  viewValue: string;
+}
+
+@Component({
+  selector: 'control-dialog',
+  templateUrl: './control.dialog.html'
+})
+export class DialogConfirm {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogConfirm>) { }
+
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
+
+  onConfirm(): void {
+    this.dialogRef.close(true);
+  }
 }
 
 @Component({
@@ -38,7 +62,15 @@ export class ControlComponent implements OnInit {
     { value: -1, viewValue: 'User defined' },
   ];
 
-  constructor() { }
+  public speeds: Speed[] = [
+    { value: 1, viewValue: 'Low' },
+    { value: 1, viewValue: 'Medium' },
+    { value: 1, viewValue: 'High' },
+  ];
+
+  public speed: number = 1;
+
+  constructor(public confirmDialog: MatDialog) { }
 
   public scan() {
     var that = this;
@@ -122,10 +154,15 @@ export class ControlComponent implements OnInit {
   }
 
   public resetZeroPosition() {
-    var buffer = new ArrayBuffer(1);
-    var dataView = new DataView(buffer);
-    dataView.setInt8(0, 5);
-    this.commandCharacteristic.writeValue(dataView);
+    const dialogRef = this.confirmDialog.open(DialogConfirm);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        var buffer = new ArrayBuffer(1);
+        var dataView = new DataView(buffer);
+        dataView.setInt8(0, 5);
+        this.commandCharacteristic.writeValue(dataView);
+      }
+    });
   }
 
   public disconnect() {
@@ -142,3 +179,4 @@ export class ControlComponent implements OnInit {
   }
 
 }
+
