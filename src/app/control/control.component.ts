@@ -63,12 +63,12 @@ export class ControlComponent implements OnInit {
   ];
 
   public speeds: Speed[] = [
-    { value: 1, viewValue: 'Low' },
+    { value: 0, viewValue: 'Low' },
     { value: 1, viewValue: 'Medium' },
-    { value: 1, viewValue: 'High' },
+    { value: 2, viewValue: 'High' },
   ];
 
-  public speed: number = 1;
+  public speed: number = 0;
 
   constructor(public confirmDialog: MatDialog) { }
 
@@ -115,7 +115,16 @@ export class ControlComponent implements OnInit {
     });
   }
 
+  public setSpeed() {
+    var buffer = new ArrayBuffer(2);
+    var dataView = new DataView(buffer);
+    dataView.setInt8(0, 6);
+    dataView.setInt8(1, this.speed);
+    this.commandCharacteristic.writeValue(dataView);
+  }
+
   public forward() {
+    this.setSpeed();
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 1);
@@ -128,6 +137,7 @@ export class ControlComponent implements OnInit {
   }
 
   public backward() {
+    this.setSpeed();
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 2);
@@ -147,6 +157,7 @@ export class ControlComponent implements OnInit {
   }
 
   public goToZero() {
+    this.setSpeed();
     var buffer = new ArrayBuffer(1);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 4);

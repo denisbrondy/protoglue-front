@@ -62,7 +62,7 @@
     </mat-expansion-panel-header>
     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
       <mat-form-field>
-        <mat-select placeholder="Speed" [(ngModel)]="speed">
+        <mat-select [disabled]="!connected" placeholder="Speed" [(ngModel)]="speed">
           <mat-option *ngFor="let speed of speeds" [value]="speed.value">
             {{speed.viewValue}}
           </mat-option>
