@@ -48,7 +48,8 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Move with following step number</mat-label>
-        <input matInput type="number" min=0 max=9999999999 [disabled]="!(stepFactor==-1)" [(ngModel)]="userDefinedStepValue">
+        <input matInput type="number" min=0 max=9999999999 [disabled]="!(stepFactor==-1)"
+          [(ngModel)]="userDefinedStepValue">
       </mat-form-field>
     </div>
   </mat-expansion-panel>
@@ -68,6 +69,9 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <button mat-flat-button (click)="setSpeed()" [disabled]="!connected || moving" color="primary">Apply</button>
     </div>
   </mat-expansion-panel>
 </mat-accordion>

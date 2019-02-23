@@ -57,8 +57,8 @@ export class ControlComponent implements OnInit {
   public factors: Factor[] = [
     { value: 1, viewValue: 'Step by step' },
     { value: 10, viewValue: '10 steps' },
-    { value: 360, viewValue: '1 revolution' },
-    { value: 3600, viewValue: '10 revolutions' },
+    { value: 200, viewValue: '1 revolution' },
+    { value: 2000, viewValue: '10 revolutions' },
     { value: -1, viewValue: 'User defined' },
   ];
 
@@ -124,7 +124,6 @@ export class ControlComponent implements OnInit {
   }
 
   public forward() {
-    this.setSpeed();
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 1);
@@ -137,7 +136,6 @@ export class ControlComponent implements OnInit {
   }
 
   public backward() {
-    this.setSpeed();
     var buffer = new ArrayBuffer(3);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 2);
@@ -157,7 +155,6 @@ export class ControlComponent implements OnInit {
   }
 
   public goToZero() {
-    this.setSpeed();
     var buffer = new ArrayBuffer(1);
     var dataView = new DataView(buffer);
     dataView.setInt8(0, 4);
